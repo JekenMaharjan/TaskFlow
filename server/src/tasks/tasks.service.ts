@@ -27,8 +27,9 @@ export class TasksService {
         return newTask;
     }
 
+    // GET ALL TASKS
     findAll() {
-        return `This action returns all tasks`;
+        return this.tasks;
     }
 
     findOne(id: number) {
