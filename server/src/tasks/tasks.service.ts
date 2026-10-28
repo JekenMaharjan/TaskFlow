@@ -41,8 +41,19 @@ export class TasksService {
         return task;
     }
 
-    update(id: number, updateTaskDto: UpdateTaskDto) {
-        return `This action updates a #${id} task`;
+    // UPDATE SPECIFIC TASK
+    update(id: number, updateTaskDto: UpdateTaskDto): Task {
+        const task = this.findOne(id);
+        if (!task) {
+            throw new NotFoundException(`Task with ID ${id} not found`);
+        }
+        const taskIndex = this.tasks.findIndex((t) => t.id === id);
+        const updatedTask = {
+            ...task,
+            ...updateTaskDto,
+        } as Task;
+        this.tasks[taskIndex] = updatedTask;
+        return updatedTask;
     }
 
     remove(id: number) {
