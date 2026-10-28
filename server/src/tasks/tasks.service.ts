@@ -56,7 +56,13 @@ export class TasksService {
         return updatedTask;
     }
 
+    // DELETE TASK
     remove(id: number) {
-        return `This action removes a #${id} task`;
+        const index = this.tasks.findIndex(t => t.id === id);
+        if(index === -1) {
+            throw new NotFoundException(`Task with ID ${id} not found`);
+        }
+        this.tasks.splice(index, 1);
+        return { message: `Task ${id} successfully deleted` };
     }
 }
