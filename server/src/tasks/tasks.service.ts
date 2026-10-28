@@ -2,10 +2,29 @@ import { Injectable } from '@nestjs/common';
 import { CreateTaskDto } from './dto/create-task.dto';
 import { UpdateTaskDto } from './dto/update-task.dto';
 
+export interface Task {
+    id: number;
+    title: string;
+    description?: string;
+    status?: string;
+    priority?: string;
+    due_date?: Date;
+}
+
 @Injectable()
 export class TasksService {
-    create(createTaskDto: CreateTaskDto) {
-        return 'This action adds a new task';
+    // This array acts as database in RAM
+    private tasks: Task[] = [];
+    private idCounter = 1;
+
+    // CREATE TASK
+    create(createTaskDto: CreateTaskDto): Task {
+        const newTask: Task = {
+            id: this.idCounter++, // Fake auto-incrementing ID
+            ...createTaskDto,
+        } as Task;
+        this.tasks.push(newTask);
+        return newTask;
     }
 
     findAll() {
